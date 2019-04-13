@@ -3,6 +3,9 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bcrypt=require('bcrypt');
 const _lodash=require('lodash');
+const config=require('config');
+const jwt=require('jsonwebtoken');
+
 const router = express.Router();
 
 router.post('/', async (req, res) => {
@@ -33,8 +36,11 @@ router.post('/', async (req, res) => {
     //lodash pick out these properties from obect i.e avoid the password field
     const lodashUserPick=_lodash.pick(user,['_id','name','email']);
     
-    //return to client, sends all of object to the client
-    res.send(lodashUserPick);
+    //sign jwt
+    const token=jwt.sign({_id:user._id},config.get('jwtPrivateKey'));
+    
+    //return to client, with an auth header set to the value of the jwt token
+    res.header('x-auth-token',token).send(lodashUserPick);
 });
 
 
