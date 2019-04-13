@@ -1,5 +1,3 @@
-// to set env variable in terminal
-// export vidly_jwtPrivateKey=mySecureKey
 {
   "jwtPrivateKey": "vidly_jwtPrivateKey"
 }

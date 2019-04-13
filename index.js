@@ -14,6 +14,9 @@ const auth=require('./routes/auth');
 const express = require('express');
 const app = express();
 
+
+// to set env variable in terminal type
+// export vidly_jwtPrivateKey=mySecureKey
 if(!config.get('jwtPrivateKey')){
   console.log('FATAL ERROR: jwt private key not define');
   process.exit(1);

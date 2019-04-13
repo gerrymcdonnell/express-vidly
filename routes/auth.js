@@ -31,7 +31,9 @@ router.post('/', async (req, res) => {
 
     if(!validPassword)return res.status(400).send('Invalid email or password');
 
-    //jwt
+    // jwt get hte value of enviroment variable and use to sign token
+    // to set env variable in terminal type
+    // export vidly_jwtPrivateKey=mySecureKey
     const token=jwt.sign({_id:user._id},config.get('jwtPrivateKey'));
 
     //valid login
