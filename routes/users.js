@@ -37,4 +37,10 @@ router.post('/', async (req, res) => {
     res.send(lodashUserPick);
 });
 
+
+router.get('/', async (req, res) => {
+    const users = await User.find().sort('name');
+    res.send(users);
+  });
+
 module.exports=router;
