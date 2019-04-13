@@ -11,7 +11,8 @@ router.get('/', async (req, res) => {
   res.send(genres);
 });
 
-//note auth paramter which is a middleware object
+//vid 137 note auth paramter which is a middleware object which prevents unauthorised
+//post requests without a valid token
 router.post('/', auth,async (req, res) => {
 
   const { error } = validate(req.body); 
