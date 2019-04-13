@@ -1,6 +1,7 @@
 const {User, validate} = require('../models/user');
 const mongoose = require('mongoose');
 const express = require('express');
+const _lodash=require('lodash');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
@@ -13,15 +14,22 @@ router.post('/', async (req, res) => {
     if (user) return res.status(400).send('User Already Exists');
 
     //new user
-    user = new User({ 
-        name: req.body.name,
-        email:req.body.email,
-        password:req.body.password
-    });
+    // user = new User({ 
+    //     name: req.body.name,
+    //     email:req.body.email,
+    //     password:req.body.password
+    // });
+
+    user=new User(_lodash.pick(req.body,['name','email','password']));
+
     //save it
     await user.save();
-    //return to client
-    res.send(user);
+
+    //lodash pick out these properties from obect i.e avoid the password field
+    const lodashUserPick=_lodash.pick(user,['_id','name','email']);
+    
+    //return to client, sends all of object to the client
+    res.send(lodashUserPick);
 });
 
 module.exports=router;
