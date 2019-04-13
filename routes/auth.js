@@ -1,5 +1,6 @@
 const {User} = require('../models/user');
 
+const jwt=require('jsonwebtoken');
 const mongoose = require('mongoose');
 const express = require('express');
 const bcrypt=require('bcrypt');
@@ -29,8 +30,11 @@ router.post('/', async (req, res) => {
 
     if(!validPassword)return res.status(400).send('Invalid email or password');
 
+    //jwt
+    const token=jwt.sign({_id:user._id},'jwtprivatekey');
+
     //valid login
-    res.send(true);
+    res.send(token);
 });
 
 
