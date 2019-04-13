@@ -1,7 +1,7 @@
 const {User} = require('../models/user');
 
-const config=require('config');
-const jwt=require('jsonwebtoken');
+// const config=require('config');
+// const jwt=require('jsonwebtoken');
 const mongoose = require('mongoose');
 const express = require('express');
 const bcrypt=require('bcrypt');
@@ -34,8 +34,9 @@ router.post('/', async (req, res) => {
     // jwt get hte value of enviroment variable and use to sign token
     // to set env variable in terminal type
     // export vidly_jwtPrivateKey=mySecureKey
-    const token=jwt.sign({_id:user._id},config.get('jwtPrivateKey'));
+    const token=user.generateAuthToken();
 
+    
     //valid login
     res.send(token);
 });

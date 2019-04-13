@@ -36,8 +36,7 @@ router.post('/', async (req, res) => {
     //lodash pick out these properties from obect i.e avoid the password field
     const lodashUserPick=_lodash.pick(user,['_id','name','email']);
     
-    //sign jwt
-    const token=jwt.sign({_id:user._id},config.get('jwtPrivateKey'));
+    const token=user.generateAuthToken();
     
     //return to client, with an auth header set to the value of the jwt token
     res.header('x-auth-token',token).send(lodashUserPick);
