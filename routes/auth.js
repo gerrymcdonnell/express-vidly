@@ -23,8 +23,9 @@ router.post('/', async (req, res) => {
     const validPassword=await bcrypt.compare(req.body.password,user.password);
 
     //just for testing
-    console.log('plain text password is: ',req.body.password);
-    console.log('hashed password is: ',user.password);
+    if(router.get('env')==='development')
+        console.log('plain text password is: ',req.body.password);
+        console.log('hashed password is: ',user.password);
 
     if(!validPassword)return res.status(400).send('Invalid email or password');
 
