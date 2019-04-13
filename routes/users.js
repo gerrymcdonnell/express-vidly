@@ -3,10 +3,20 @@ const mongoose = require('mongoose');
 const express = require('express');
 const bcrypt=require('bcrypt');
 const _lodash=require('lodash');
+const router = express.Router();
 const config=require('config');
 const jwt=require('jsonwebtoken');
 
-const router = express.Router();
+//auth middleware
+const auth=require('../middleware/auth');
+
+
+//me note the auth object
+router.get('/me', auth, async (req, res) => {
+  const user=await User.findById(req.user._id).select('-password');
+  res.send(user);
+})
+
 
 router.post('/', async (req, res) => {
     const { error } = validate(req.body); 
@@ -43,9 +53,11 @@ router.post('/', async (req, res) => {
 });
 
 
+// add the auth object to restrict access i.e
+// router.get('/', auth,async (req, res) => {
 router.get('/', async (req, res) => {
-    const users = await User.find().sort('name');
-    res.send(users);
-  });
+  const users = await User.find().sort('name');
+  res.send(users);
+});
 
 module.exports=router;
