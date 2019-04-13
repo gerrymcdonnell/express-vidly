@@ -35,5 +35,6 @@ function validateUser(user) {
 }
 
 //exports.userSchema = userSchema;
-exports.user = User; 
+//Bug was here was lover case .user insterad of .User
+exports.User = User; 
 exports.validate = validateUser;
