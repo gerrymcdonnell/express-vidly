@@ -35,5 +35,5 @@ function validateUser(user) {
 }
 
 //exports.userSchema = userSchema;
-exports.user = user; 
-exports.validate = validateGenre;
+exports.user = User; 
+exports.validate = validateUser;
