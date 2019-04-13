@@ -1,6 +1,7 @@
 const {User, validate} = require('../models/user');
 const mongoose = require('mongoose');
 const express = require('express');
+const bcrypt=require('bcrypt');
 const _lodash=require('lodash');
 const router = express.Router();
 
@@ -21,6 +22,10 @@ router.post('/', async (req, res) => {
     // });
 
     user=new User(_lodash.pick(req.body,['name','email','password']));
+    //generate salt
+    const salt=await bcrypt.genSalt(10);
+    //generate hased password using the salt
+    user.password=await bcrypt.hash(user.password,salt);
 
     //save it
     await user.save();
