@@ -21,6 +21,11 @@ router.post('/', async (req, res) => {
     // validate password using bcrypt 
     // compare plain text password (req.body.password) with hashedpassword (user.password)
     const validPassword=await bcrypt.compare(req.body.password,user.password);
+
+    //just for testing
+    console.log('plain text password is: ',req.body.password);
+    console.log('hashed password is: ',user.password);
+
     if(!validPassword)return res.status(400).send('Invalid email or password');
 
     //valid login
