@@ -1,10 +1,11 @@
 # express-vidly
 expressJS Vidly Backend before user Auth
 
-#install modules
+# install modules
 npm install
 
-#run app with NodeMon
+# run app with NodeMon
 nodemon index.js
 
-#ensure MongoDB is running
+# Note 
+ensure MongoDB is running
