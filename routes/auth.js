@@ -1,8 +1,10 @@
 const {User} = require('../models/user');
+
 const mongoose = require('mongoose');
 const express = require('express');
 const bcrypt=require('bcrypt');
 const _lodash=require('lodash');
+const Joi = require('joi');
 const router = express.Router();
 
 router.post('/', async (req, res) => {
@@ -33,7 +35,7 @@ function validate(req) {
       password: Joi.string().min(5).max(255).required()
     };
   
-    return Joi.validate(user, schema);
+    return Joi.validate(req, schema);
   }
 
 module.exports=router;
