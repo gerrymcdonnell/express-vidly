@@ -1,5 +1,6 @@
 const {User} = require('../models/user');
 
+const config=require('config');
 const jwt=require('jsonwebtoken');
 const mongoose = require('mongoose');
 const express = require('express');
@@ -31,7 +32,7 @@ router.post('/', async (req, res) => {
     if(!validPassword)return res.status(400).send('Invalid email or password');
 
     //jwt
-    const token=jwt.sign({_id:user._id},'jwtprivatekey');
+    const token=jwt.sign({_id:user._id},config.get('jwtPrivateKey'));
 
     //valid login
     res.send(token);
