@@ -3,15 +3,16 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 
+//auth middleware
+const auth=require('../middleware/auth');
+
 router.get('/', async (req, res) => {
   const genres = await Genre.find().sort('name');
   res.send(genres);
 });
 
-router.post('/', async (req, res) => {
-
-  //auth
-
+//note auth paramter which is a middleware object
+router.post('/', auth,async (req, res) => {
 
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
