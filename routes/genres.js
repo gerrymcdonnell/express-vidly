@@ -5,6 +5,7 @@ const router = express.Router();
 
 //auth middleware
 const auth=require('../middleware/auth');
+const admin=require('../middleware/admin');
 
 router.get('/', async (req, res) => {
   const genres = await Genre.find().sort('name');
@@ -37,7 +38,9 @@ router.put('/:id', async (req, res) => {
   res.send(genre);
 });
 
-router.delete('/:id', async (req, res) => {
+// note the 2 middleware fucntions which will be executed in sequence
+// ie auth and admin 
+router.delete('/:id', [auth,admin],async (req, res) => {
   const genre = await Genre.findByIdAndRemove(req.params.id);
 
   if (!genre) return res.status(404).send('The genre with the given ID was not found.');
