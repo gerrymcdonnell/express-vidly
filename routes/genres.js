@@ -8,13 +8,14 @@ const auth=require('../middleware/auth');
 const admin=require('../middleware/admin');
 
 //vid 144 code previously had no error handling
-router.get('/', async (req, res) => {
+router.get('/', async (req, res,next) => {
   try{
     const genres = await Genre.find().sort('name');
     res.send(genres);
   }
   catch(ex){
-    res.status(500).send('Err: 500 Something failed')
+    //pass control to next middleware 
+    next(ex)
   }
 });
 

@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const config=require('config');
 
+const error=require('./middleware/error');
+
 const genres = require('./routes/genres');
 const customers = require('./routes/customers');
 const movies = require('./routes/movies');
@@ -29,7 +31,7 @@ mongoose.connect(dbConnectionString)
   .then(() => console.log('Connected to MongoDB...',dbConnectionString))
   .catch(err => console.error('Could not connect to MongoDB...'));
 
-
+//middleware
 app.use(express.json());
 app.use('/api/genres', genres);
 app.use('/api/customers', customers);
@@ -37,6 +39,9 @@ app.use('/api/movies', movies);
 app.use('/api/rentals', rentals);
 app.use('/api/users', users);
 app.use('/api/auth',auth);
+
+//vid 145 error middleware
+app.use(error);
 
 //environments
 console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
