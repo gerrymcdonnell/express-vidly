@@ -7,9 +7,15 @@ const router = express.Router();
 const auth=require('../middleware/auth');
 const admin=require('../middleware/admin');
 
+//vid 144 code previously had no error handling
 router.get('/', async (req, res) => {
-  const genres = await Genre.find().sort('name');
-  res.send(genres);
+  try{
+    const genres = await Genre.find().sort('name');
+    res.send(genres);
+  }
+  catch(ex){
+    res.status(500).send('Err: 500 Something failed')
+  }
 });
 
 //vid 137 note auth paramter which is a middleware object which prevents unauthorised
